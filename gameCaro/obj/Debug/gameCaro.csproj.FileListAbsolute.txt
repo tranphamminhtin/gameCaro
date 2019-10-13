@@ -1,0 +1,9 @@
+D:\4\TLCN\Project\gameCaro\gameCaro\bin\Debug\gameCaro.exe.config
+D:\4\TLCN\Project\gameCaro\gameCaro\bin\Debug\gameCaro.exe
+D:\4\TLCN\Project\gameCaro\gameCaro\bin\Debug\gameCaro.pdb
+D:\4\TLCN\Project\gameCaro\gameCaro\obj\Debug\gameCaro.csprojResolveAssemblyReference.cache
+D:\4\TLCN\Project\gameCaro\gameCaro\obj\Debug\gameCaro.Form1.resources
+D:\4\TLCN\Project\gameCaro\gameCaro\obj\Debug\gameCaro.Properties.Resources.resources
+D:\4\TLCN\Project\gameCaro\gameCaro\obj\Debug\gameCaro.csproj.GenerateResource.Cache
+D:\4\TLCN\Project\gameCaro\gameCaro\obj\Debug\gameCaro.exe
+D:\4\TLCN\Project\gameCaro\gameCaro\obj\Debug\gameCaro.pdb

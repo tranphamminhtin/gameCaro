@@ -22,6 +22,7 @@ namespace gameCaro
             ChessBoard.MaxGame = 5;
             ChessBoard.GameMode = 1;
             ChessBoard.Ready = false;
+            ChessBoard.SymbolPlayerIsX = true;
             pgbO.Step = pgbX.Step = Cons.TM_STEP;
             pgbO.Maximum = pgbX.Maximum = Cons.TM_MAX;
             pgbO.Value = pgbX.Value = 0;

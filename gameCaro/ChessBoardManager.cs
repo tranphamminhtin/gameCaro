@@ -28,6 +28,8 @@ namespace gameCaro
         private Stack<Point> stkRedo;
         private int gameMode;
         private bool ready;
+        private bool symbolPlayerIsX;
+        private Computer computer;
 
         public Panel ChessBoard
         {
@@ -159,6 +161,32 @@ namespace gameCaro
             }
         }
 
+        public bool SymbolPlayerIsX
+        {
+            get
+            {
+                return symbolPlayerIsX;
+            }
+
+            set
+            {
+                symbolPlayerIsX = value;
+            }
+        }
+
+        public Computer Computer
+        {
+            get
+            {
+                return computer;
+            }
+
+            set
+            {
+                computer = value;
+            }
+        }
+
         #endregion
 
         #region Initialize
@@ -218,9 +246,9 @@ namespace gameCaro
             Button btn = sender as Button;
             if (btn.Text != "")
                 return;
-            DrawChess(btn);
+            DrawChess(GetChessPoint(btn), CurrentPlayer);
             this.StkUndo.Push(GetChessPoint(btn));
-            this.stkRedo = new Stack<Point>();
+            this.StkRedo = new Stack<Point>();
 
             if(isEndGame(btn))
             {
@@ -228,19 +256,54 @@ namespace gameCaro
                 Form.EndGame(Convert.ToInt32(IsEndGame));
             }
             else
+            {
                 ChangePlayer();
+                if (GameMode == 2)
+                {
+                    Ready = false;
+                    ComputerMove(Computer.SearchPosition());
+                }      
+            }    
         }
 
-        private void DrawChess(Button btn)
+        public void DrawChess(Point point, int value)
         {
-            if (CurrentPlayer == 1)
+            Button btn = matrix[point.Y][point.X];
+            switch (value)
             {
-                btn.Text = "X";               
-                btn.ForeColor = Color.Red;
-            }
-            else{
-                btn.Text = "O";
-                btn.ForeColor = Color.Blue;
+                case 1:
+                    {
+                        if (SymbolPlayerIsX)
+                        {
+                            btn.Text = "X";
+                            btn.ForeColor = Color.Red;
+                        }
+                        else
+                        {
+                            btn.Text = "O";
+                            btn.ForeColor = Color.Blue;
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        if (!SymbolPlayerIsX)
+                        {
+                            btn.Text = "X";
+                            btn.ForeColor = Color.Red;
+                        }
+                        else
+                        {
+                            btn.Text = "O";
+                            btn.ForeColor = Color.Blue;
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        btn.Text = "";
+                        break;
+                    }
             }
         }
         
@@ -250,12 +313,39 @@ namespace gameCaro
             Form.resetTime(CurrentPlayer);
         }
 
-
+        public bool checkChess(Point point, int value)
+        {
+            Button btn = matrix[point.Y][point.X];
+            switch (value)
+            {
+                case 0:
+                    {
+                        if (btn.Text != "")
+                            return false;
+                        return true;
+                    }
+                case 1:
+                    {
+                        string symbolPlayer = (SymbolPlayerIsX) ? "X" : "O";
+                        if (btn.Text.Contains(symbolPlayer))
+                            return true;
+                        return false;
+                    }
+                case 2:
+                    {
+                        string symbolComputer = (SymbolPlayerIsX) ? "O" : "X";
+                        if (btn.Text.Contains(symbolComputer))
+                            return true;
+                        return false;
+                    }
+                default: return false;
+            }
+        }
 
         #region checkEndGame
 
 
-        private bool isEndGame(Button btn)
+        public bool isEndGame(Button btn)
         {
             return isEndHorizontal(btn) || isEndVertical(btn) || isEndPrimary(btn) || isEndSub(btn);
         }
@@ -418,9 +508,9 @@ namespace gameCaro
 
         private Point GetChessPoint(Button btn)
         {
-            int vertical = Convert.ToInt32(btn.Tag);
-            int horizontal = Matrix[vertical].IndexOf(btn);
-            Point point = new Point(horizontal, vertical);
+            int column = Convert.ToInt32(btn.Tag);
+            int row = Matrix[column].IndexOf(btn);
+            Point point = new Point(row, column);
             return point;
         }
 
@@ -454,7 +544,7 @@ namespace gameCaro
                 Point undoPoint = StkRedo.Pop();
                 StkUndo.Push(undoPoint);
                 Button btn = Matrix[undoPoint.Y][undoPoint.X];
-                DrawChess(btn);
+                DrawChess(GetChessPoint(btn), CurrentPlayer);
                 if (isEndGame(btn))
                 {
                     IsEndGame = CurrentPlayer == 1 ? ENDGAME.PlayerX : ENDGAME.PlayerO;
@@ -465,6 +555,30 @@ namespace gameCaro
             }
         }
 
+        #endregion
+
+        #region ComputerMove
+        private void ComputerMove(Point point)
+        {
+            if (!Ready)
+                return;
+            if (Matrix[point.Y][point.X].Text != "")
+                return;
+            DrawChess(point, CurrentPlayer);
+            this.StkUndo.Push(point);
+            this.StkRedo = new Stack<Point>();
+
+            if (isEndGame(Matrix[point.Y][point.X]))
+            {
+                IsEndGame = CurrentPlayer == 1 ? ENDGAME.PlayerX : ENDGAME.PlayerO;
+                Form.EndGame(Convert.ToInt32(IsEndGame));
+            }
+            else
+            {
+                ChangePlayer();
+                Ready = true;
+            }   
+        }
         #endregion
 
         #endregion
