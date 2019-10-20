@@ -31,7 +31,7 @@ namespace gameCaro
         }
 
         // hàm lấy ví trí có điểm max
-        public Nullable<Point> MaxPos()
+        public Point MaxPos()
         {
             int Max = 0; // diem max 
             Point p = new Point();
@@ -49,23 +49,23 @@ namespace gameCaro
             }
             if (Max == 0)
             {
-                return null;
+                return new Point(-1, -1);
             }
             evaluationBoard = Max;
             return p;
         }
 
 
-        //public void pr(int[][] a)
-        //{
-        //    for (int i = 0; i < a.length; i++)
-        //    {
-        //        for (int j = 0; j < a.length; j++)
-        //        {
-        //            System.out.print(a[i][j] + "\t");
-        //        }
-        //        System.out.println();
-        //    }
-        //}
+        public void pr(int[,] a)
+        {
+            for (int i = 0; i < Cons.CHESS_BOARD_WIDTH; i++)
+            {
+                for (int j = 0; j < Cons.CHESS_BOARD_HEIGHT; j++)
+                {
+                    Console.WriteLine(a[i, j] + "\t");
+                }
+                Console.WriteLine("");
+            }
+        }
     }
 }

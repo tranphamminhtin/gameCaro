@@ -195,7 +195,7 @@ namespace gameCaro
             this.ChessBoard = chessBoard;
             this.CurrentPlayer = 1;
             this.Form = form;
-            
+            this.Computer = new Computer(this);
         }
         #endregion
 
@@ -522,37 +522,33 @@ namespace gameCaro
         {
             if (stkUndo.Count == 0)
                 return;
-            if (GameMode == 1)
-            {
-                Point undoPoint = StkUndo.Pop();
-                StkRedo.Push(undoPoint);
-                Button btn = Matrix[undoPoint.Y][undoPoint.X];
-                btn.Text = "";
-                if (Ready)
-                    ChangePlayer();
-                else
-                    Form.resetTime(CurrentPlayer);
-            }
+            Point undoPoint = StkUndo.Pop();
+            StkRedo.Push(undoPoint);
+            Button btn = Matrix[undoPoint.Y][undoPoint.X];
+            btn.Text = "";
+            if (Ready)
+                ChangePlayer();
+            else
+                Form.resetTime(CurrentPlayer);
         }
 
         public void Redo()
         {
             if (StkRedo.Count == 0)
                 return;
-            if (GameMode == 1)
+
+            Point undoPoint = StkRedo.Pop();
+            StkUndo.Push(undoPoint);
+            Button btn = Matrix[undoPoint.Y][undoPoint.X];
+            DrawChess(GetChessPoint(btn), CurrentPlayer);
+            if (isEndGame(btn))
             {
-                Point undoPoint = StkRedo.Pop();
-                StkUndo.Push(undoPoint);
-                Button btn = Matrix[undoPoint.Y][undoPoint.X];
-                DrawChess(GetChessPoint(btn), CurrentPlayer);
-                if (isEndGame(btn))
-                {
-                    IsEndGame = CurrentPlayer == 1 ? ENDGAME.PlayerX : ENDGAME.PlayerO;
-                    Form.EndGame(Convert.ToInt32(IsEndGame));
-                }
-                else
-                    ChangePlayer();
+                IsEndGame = CurrentPlayer == 1 ? ENDGAME.PlayerX : ENDGAME.PlayerO;
+                Form.EndGame(Convert.ToInt32(IsEndGame));
             }
+            else
+                ChangePlayer();
+
         }
 
         #endregion
@@ -560,8 +556,6 @@ namespace gameCaro
         #region ComputerMove
         private void ComputerMove(Point point)
         {
-            if (!Ready)
-                return;
             if (Matrix[point.Y][point.X].Text != "")
                 return;
             DrawChess(point, CurrentPlayer);
@@ -575,8 +569,8 @@ namespace gameCaro
             }
             else
             {
-                ChangePlayer();
                 Ready = true;
+                ChangePlayer();
             }   
         }
         #endregion

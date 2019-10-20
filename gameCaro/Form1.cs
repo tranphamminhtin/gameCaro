@@ -73,13 +73,25 @@ namespace gameCaro
 
         private void btnUndo_Click(object sender, EventArgs e)
         {
-            ChessBoard.Undo();
+            if(ChessBoard.GameMode==1)
+                ChessBoard.Undo();
+            else
+            {
+                ChessBoard.Undo();
+                ChessBoard.Undo();
+            }
             ChessBoard.Ready = true;
         }
 
         private void btnRedo_Click(object sender, EventArgs e)
         {
-            ChessBoard.Redo();
+            if (ChessBoard.GameMode == 1)
+                ChessBoard.Redo();
+            else
+            {
+                ChessBoard.Redo();
+                ChessBoard.Redo();
+            }
         }
 
         private void tmX_Tick(object sender, EventArgs e)
@@ -102,6 +114,7 @@ namespace gameCaro
 
         private void btnPP_Click(object sender, EventArgs e)
         {
+            ChessBoard.GameMode = 1;
             ChessBoard.Ready = true;
             btnUndo.Enabled = true;
             btnRedo.Enabled = true;
@@ -125,6 +138,18 @@ namespace gameCaro
         {
             if (MessageBox.Show("Bạn muốn thoát khỏi game ? ? ?", "Thông báo", MessageBoxButtons.OKCancel) != System.Windows.Forms.DialogResult.OK)
                 e.Cancel = true;
+        }
+
+        private void btnPC_Click(object sender, EventArgs e)
+        {
+            ChessBoard.GameMode = 2;
+            Computer.MAXDEPTH = 5;
+            ChessBoard.Ready = true;
+            btnUndo.Enabled = true;
+            btnRedo.Enabled = true;
+            btnNew.Enabled = true;
+            ChessBoard.DrawChessBoard();
+            pnlChessBroard.Enabled = true;
         }
     }
 }

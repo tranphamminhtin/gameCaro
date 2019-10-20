@@ -31,6 +31,18 @@
             this.components = new System.ComponentModel.Container();
             this.pnlChessBroard = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.level1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.level2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.level3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pgbO = new System.Windows.Forms.ProgressBar();
@@ -45,18 +57,6 @@
             this.btnRedo = new System.Windows.Forms.Button();
             this.tmX = new System.Windows.Forms.Timer(this.components);
             this.tmO = new System.Windows.Forms.Timer(this.components);
-            this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.playerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.playerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.level1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.level2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.level3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -82,6 +82,91 @@
             this.menuStrip1.Size = new System.Drawing.Size(962, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // menuToolStripMenuItem
+            // 
+            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.playerToolStripMenuItem,
+            this.playerToolStripMenuItem1,
+            this.newToolStripMenuItem,
+            this.quitToolStripMenuItem});
+            this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
+            this.menuToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
+            this.menuToolStripMenuItem.Text = "Menu";
+            // 
+            // playerToolStripMenuItem
+            // 
+            this.playerToolStripMenuItem.Name = "playerToolStripMenuItem";
+            this.playerToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.playerToolStripMenuItem.Text = "2 Player";
+            // 
+            // playerToolStripMenuItem1
+            // 
+            this.playerToolStripMenuItem1.Name = "playerToolStripMenuItem1";
+            this.playerToolStripMenuItem1.Size = new System.Drawing.Size(136, 26);
+            this.playerToolStripMenuItem1.Text = "1 Player";
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.newToolStripMenuItem.Text = "New";
+            // 
+            // quitToolStripMenuItem
+            // 
+            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.quitToolStripMenuItem.Text = "Quit";
+            // 
+            // optionToolStripMenuItem
+            // 
+            this.optionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.levelToolStripMenuItem,
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem});
+            this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
+            this.optionToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
+            this.optionToolStripMenuItem.Text = "Edit";
+            // 
+            // levelToolStripMenuItem
+            // 
+            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.level1ToolStripMenuItem,
+            this.level2ToolStripMenuItem,
+            this.level3ToolStripMenuItem});
+            this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
+            this.levelToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
+            this.levelToolStripMenuItem.Text = "Level";
+            // 
+            // level1ToolStripMenuItem
+            // 
+            this.level1ToolStripMenuItem.Name = "level1ToolStripMenuItem";
+            this.level1ToolStripMenuItem.Size = new System.Drawing.Size(130, 26);
+            this.level1ToolStripMenuItem.Text = "Level 1";
+            // 
+            // level2ToolStripMenuItem
+            // 
+            this.level2ToolStripMenuItem.Name = "level2ToolStripMenuItem";
+            this.level2ToolStripMenuItem.Size = new System.Drawing.Size(130, 26);
+            this.level2ToolStripMenuItem.Text = "Level 2";
+            // 
+            // level3ToolStripMenuItem
+            // 
+            this.level3ToolStripMenuItem.Name = "level3ToolStripMenuItem";
+            this.level3ToolStripMenuItem.Size = new System.Drawing.Size(130, 26);
+            this.level3ToolStripMenuItem.Text = "Level 3";
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
+            this.undoToolStripMenuItem.Text = "Undo";
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
+            this.redoToolStripMenuItem.Text = "Redo";
             // 
             // pictureBox1
             // 
@@ -160,6 +245,7 @@
             this.btnPC.TabIndex = 5;
             this.btnPC.Text = "1 Player";
             this.btnPC.UseVisualStyleBackColor = true;
+            this.btnPC.Click += new System.EventHandler(this.btnPC_Click);
             // 
             // btnThoat
             // 
@@ -214,91 +300,6 @@
             // tmO
             // 
             this.tmO.Tick += new System.EventHandler(this.tmO_Tick);
-            // 
-            // menuToolStripMenuItem
-            // 
-            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.playerToolStripMenuItem,
-            this.playerToolStripMenuItem1,
-            this.newToolStripMenuItem,
-            this.quitToolStripMenuItem});
-            this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            this.menuToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
-            this.menuToolStripMenuItem.Text = "Menu";
-            // 
-            // playerToolStripMenuItem
-            // 
-            this.playerToolStripMenuItem.Name = "playerToolStripMenuItem";
-            this.playerToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.playerToolStripMenuItem.Text = "2 Player";
-            // 
-            // playerToolStripMenuItem1
-            // 
-            this.playerToolStripMenuItem1.Name = "playerToolStripMenuItem1";
-            this.playerToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
-            this.playerToolStripMenuItem1.Text = "1 Player";
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.newToolStripMenuItem.Text = "New";
-            // 
-            // quitToolStripMenuItem
-            // 
-            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.quitToolStripMenuItem.Text = "Quit";
-            // 
-            // optionToolStripMenuItem
-            // 
-            this.optionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.levelToolStripMenuItem,
-            this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem});
-            this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
-            this.optionToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
-            this.optionToolStripMenuItem.Text = "Edit";
-            // 
-            // levelToolStripMenuItem
-            // 
-            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.level1ToolStripMenuItem,
-            this.level2ToolStripMenuItem,
-            this.level3ToolStripMenuItem});
-            this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
-            this.levelToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.levelToolStripMenuItem.Text = "Level";
-            // 
-            // level1ToolStripMenuItem
-            // 
-            this.level1ToolStripMenuItem.Name = "level1ToolStripMenuItem";
-            this.level1ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.level1ToolStripMenuItem.Text = "Level 1";
-            // 
-            // level2ToolStripMenuItem
-            // 
-            this.level2ToolStripMenuItem.Name = "level2ToolStripMenuItem";
-            this.level2ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.level2ToolStripMenuItem.Text = "Level 2";
-            // 
-            // level3ToolStripMenuItem
-            // 
-            this.level3ToolStripMenuItem.Name = "level3ToolStripMenuItem";
-            this.level3ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.level3ToolStripMenuItem.Text = "Level 3";
-            // 
-            // undoToolStripMenuItem
-            // 
-            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.undoToolStripMenuItem.Text = "Undo";
-            // 
-            // redoToolStripMenuItem
-            // 
-            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.redoToolStripMenuItem.Text = "Redo";
             // 
             // Form1
             // 
