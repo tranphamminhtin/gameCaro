@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -261,7 +262,14 @@ namespace gameCaro
                 if (GameMode == 2)
                 {
                     Ready = false;
-                    ComputerMove(Computer.SearchPosition());
+                    new Thread(
+                        () =>
+                        {
+                            ComputerMove(Computer.SearchPosition());
+                        }
+                        )
+                    { IsBackground = true }.Start();
+                    //ComputerMove(Computer.SearchPosition());
                 }      
             }    
         }

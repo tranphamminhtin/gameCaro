@@ -97,26 +97,30 @@
             // playerToolStripMenuItem
             // 
             this.playerToolStripMenuItem.Name = "playerToolStripMenuItem";
-            this.playerToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.playerToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.playerToolStripMenuItem.Text = "2 Player";
+            this.playerToolStripMenuItem.Click += new System.EventHandler(this.btnPP_Click);
             // 
             // playerToolStripMenuItem1
             // 
             this.playerToolStripMenuItem1.Name = "playerToolStripMenuItem1";
-            this.playerToolStripMenuItem1.Size = new System.Drawing.Size(136, 26);
+            this.playerToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
             this.playerToolStripMenuItem1.Text = "1 Player";
+            this.playerToolStripMenuItem1.Click += new System.EventHandler(this.btnPC_Click);
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.quitToolStripMenuItem.Text = "Quit";
+            this.quitToolStripMenuItem.Click += new System.EventHandler(this.btnThoat_Click);
             // 
             // optionToolStripMenuItem
             // 
@@ -135,38 +139,45 @@
             this.level2ToolStripMenuItem,
             this.level3ToolStripMenuItem});
             this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
-            this.levelToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
+            this.levelToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.levelToolStripMenuItem.Text = "Level";
             // 
             // level1ToolStripMenuItem
             // 
             this.level1ToolStripMenuItem.Name = "level1ToolStripMenuItem";
-            this.level1ToolStripMenuItem.Size = new System.Drawing.Size(130, 26);
+            this.level1ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.level1ToolStripMenuItem.Text = "Level 1";
+            this.level1ToolStripMenuItem.Click += new System.EventHandler(this.level1ToolStripMenuItem_Click);
             // 
             // level2ToolStripMenuItem
             // 
             this.level2ToolStripMenuItem.Name = "level2ToolStripMenuItem";
-            this.level2ToolStripMenuItem.Size = new System.Drawing.Size(130, 26);
+            this.level2ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.level2ToolStripMenuItem.Text = "Level 2";
+            this.level2ToolStripMenuItem.Click += new System.EventHandler(this.level2ToolStripMenuItem_Click);
             // 
             // level3ToolStripMenuItem
             // 
             this.level3ToolStripMenuItem.Name = "level3ToolStripMenuItem";
-            this.level3ToolStripMenuItem.Size = new System.Drawing.Size(130, 26);
+            this.level3ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.level3ToolStripMenuItem.Text = "Level 3";
+            this.level3ToolStripMenuItem.Click += new System.EventHandler(this.level3ToolStripMenuItem_Click);
             // 
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.btnUndo_Click);
             // 
             // redoToolStripMenuItem
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
+            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.redoToolStripMenuItem.Text = "Redo";
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.btnRedo_Click);
             // 
             // pictureBox1
             // 

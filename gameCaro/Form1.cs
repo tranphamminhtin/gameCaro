@@ -17,9 +17,11 @@ namespace gameCaro
         public Form1()
         {
             InitializeComponent();
+            Control.CheckForIllegalCrossThreadCalls = false;
 
             ChessBoard = new ChessBoardManager(this.pnlChessBroard, this);
             ChessBoard.MaxGame = 5;
+            Computer.MAXDEPTH = 5;
             ChessBoard.GameMode = 1;
             ChessBoard.Ready = false;
             ChessBoard.SymbolPlayerIsX = true;
@@ -73,14 +75,19 @@ namespace gameCaro
 
         private void btnUndo_Click(object sender, EventArgs e)
         {
-            if(ChessBoard.GameMode==1)
-                ChessBoard.Undo();
-            else
+            if (ChessBoard.GameMode == 1)
             {
                 ChessBoard.Undo();
-                ChessBoard.Undo();
-            }
-            ChessBoard.Ready = true;
+                ChessBoard.Ready = true;
+            } 
+            else
+            {
+                do
+                {
+                    ChessBoard.Undo();
+                    ChessBoard.Ready = true;
+                } while (ChessBoard.CurrentPlayer != 1);
+            }      
         }
 
         private void btnRedo_Click(object sender, EventArgs e)
@@ -89,8 +96,10 @@ namespace gameCaro
                 ChessBoard.Redo();
             else
             {
-                ChessBoard.Redo();
-                ChessBoard.Redo();
+                do
+                {
+                    ChessBoard.Redo();
+                } while (ChessBoard.CurrentPlayer != 1);
             }
         }
 
@@ -143,13 +152,27 @@ namespace gameCaro
         private void btnPC_Click(object sender, EventArgs e)
         {
             ChessBoard.GameMode = 2;
-            Computer.MAXDEPTH = 5;
             ChessBoard.Ready = true;
             btnUndo.Enabled = true;
             btnRedo.Enabled = true;
             btnNew.Enabled = true;
             ChessBoard.DrawChessBoard();
             pnlChessBroard.Enabled = true;
+        }
+
+        private void level1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Computer.MAXDEPTH = 5;
+        }
+
+        private void level2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Computer.MAXDEPTH = 7;
+        }
+
+        private void level3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Computer.MAXDEPTH = 10;
         }
     }
 }
