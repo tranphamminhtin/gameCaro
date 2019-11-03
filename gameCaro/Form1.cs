@@ -151,6 +151,29 @@ namespace gameCaro
 
         private void btnPC_Click(object sender, EventArgs e)
         {
+            setComputer();
+        }
+
+        private void level1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Computer.MAXDEPTH = 5;
+            setComputer();
+        }
+
+        private void level2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Computer.MAXDEPTH = 6;
+            setComputer();
+        }
+
+        private void level3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Computer.MAXDEPTH = 7;
+            setComputer();
+        }
+
+        void setComputer()
+        {
             ChessBoard.GameMode = 2;
             ChessBoard.Ready = true;
             btnUndo.Enabled = true;
@@ -158,21 +181,6 @@ namespace gameCaro
             btnNew.Enabled = true;
             ChessBoard.DrawChessBoard();
             pnlChessBroard.Enabled = true;
-        }
-
-        private void level1ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Computer.MAXDEPTH = 5;
-        }
-
-        private void level2ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Computer.MAXDEPTH = 7;
-        }
-
-        private void level3ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Computer.MAXDEPTH = 10;
         }
     }
 }
