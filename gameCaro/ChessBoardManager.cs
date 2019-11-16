@@ -31,6 +31,7 @@ namespace gameCaro
         private bool ready;
         private bool symbolPlayerIsX;
         private Computer computer;
+        public bool isSearching = false;
 
         public Panel ChessBoard
         {
@@ -248,6 +249,13 @@ namespace gameCaro
             if (btn.Text != "")
                 return;
             DrawChess(GetChessPoint(btn), CurrentPlayer);
+            ChangeBackgroundColor(btn, true);
+            if(StkUndo.Count > 0)
+            {
+                Point undoPoint = StkUndo.Peek();
+                Button button = Matrix[undoPoint.Y][undoPoint.X];
+                ChangeBackgroundColor(button, false);
+            }
             this.StkUndo.Push(GetChessPoint(btn));
             this.StkRedo = new Stack<Point>();
 
@@ -262,6 +270,7 @@ namespace gameCaro
                 if (GameMode == 2)
                 {
                     Ready = false;
+                    isSearching = true;
                     new Thread(
                         () =>
                         {
@@ -323,6 +332,8 @@ namespace gameCaro
 
         public bool checkChess(Point point, int value)
         {
+            if (point.Y > Cons.CHESS_BOARD_HEIGHT || point.X > Cons.CHESS_BOARD_WIDTH)
+                return false;
             Button btn = matrix[point.Y][point.X];
             switch (value)
             {
@@ -348,6 +359,14 @@ namespace gameCaro
                     }
                 default: return false;
             }
+        }
+
+        void ChangeBackgroundColor(Button btn, bool isNew)
+        {
+            if(isNew)
+                btn.BackColor = Color.Yellow;
+            else
+                btn.BackColor = Color.Transparent;
         }
 
         #region checkEndGame
@@ -528,12 +547,18 @@ namespace gameCaro
 
         public void Undo()
         {
-            if (stkUndo.Count == 0)
+            if (stkUndo.Count == 0 || isSearching)
                 return;
             Point undoPoint = StkUndo.Pop();
             StkRedo.Push(undoPoint);
             Button btn = Matrix[undoPoint.Y][undoPoint.X];
+            ChangeBackgroundColor(btn, false);
             btn.Text = "";
+            if(StkUndo.Count > 0)
+            {
+                Point point = StkUndo.Peek();
+                ChangeBackgroundColor(Matrix[point.Y][point.X], true);
+            }
             if (Ready)
                 ChangePlayer();
             else
@@ -542,13 +567,18 @@ namespace gameCaro
 
         public void Redo()
         {
-            if (StkRedo.Count == 0)
+            if (StkRedo.Count == 0 || isSearching)
                 return;
-
+            if (StkUndo.Count > 0)
+            {
+                Point point = StkUndo.Peek();
+                ChangeBackgroundColor(Matrix[point.Y][point.X], false);
+            }
             Point undoPoint = StkRedo.Pop();
             StkUndo.Push(undoPoint);
             Button btn = Matrix[undoPoint.Y][undoPoint.X];
             DrawChess(GetChessPoint(btn), CurrentPlayer);
+            ChangeBackgroundColor(btn, true);
             if (isEndGame(btn))
             {
                 IsEndGame = CurrentPlayer == 1 ? ENDGAME.PlayerX : ENDGAME.PlayerO;
@@ -556,7 +586,6 @@ namespace gameCaro
             }
             else
                 ChangePlayer();
-
         }
 
         #endregion
@@ -567,6 +596,13 @@ namespace gameCaro
             if (Matrix[point.Y][point.X].Text != "")
                 return;
             DrawChess(point, CurrentPlayer);
+            ChangeBackgroundColor(Matrix[point.Y][point.X], true);
+            if (StkUndo.Count > 0)
+            {
+                Point undoPoint = StkUndo.Peek();
+                Button button = Matrix[undoPoint.Y][undoPoint.X];
+                ChangeBackgroundColor(button, false);
+            }
             this.StkUndo.Push(point);
             this.StkRedo = new Stack<Point>();
 
@@ -578,6 +614,7 @@ namespace gameCaro
             else
             {
                 Ready = true;
+                isSearching = false;
                 ChangePlayer();
             }   
         }

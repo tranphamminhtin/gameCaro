@@ -18,8 +18,8 @@ namespace gameCaro
         public static int MAXDEPTH; // độ sâu tối đa, dùng set level
 
         // các mảng điểm dùng để tính toán điểm số
-        private int[] AScore1 = { 0, 4, 27, 256, 1458 }; // Mảng điểm tấn công
-        private int[] DScore1 = { 0, 2, 9, 99, 769 };    // Mảng điểm phòng thủ
+        //private int[] AScore = { 0, 4, 27, 256, 1458 }; // Mảng điểm tấn công
+        //private int[] DScore = { 0, 2, 9, 99, 769 };    // Mảng điểm phòng thủ
 
         public EvalBoard Move
         {
@@ -35,7 +35,7 @@ namespace gameCaro
         }
 
         //public int[] AScore = { 0, 9, 54, 169, 1458 };    // Mang diem tan cong
-        //public int[] DScore = {0, 3, 27, 99, 729};        // Mang diem phong ngu
+        //public int[] DScore = { 0, 3, 27, 99, 729 };        // Mang diem phong ngu
 
         public int[] AScore = { 0, 3, 24, 192, 1536, 12288, 98304 };  // Mang diem tan cong
         public int[] DScore = { 0, 1, 9, 81, 729, 6561, 59049 };      // Mang diem phong ngu
@@ -52,358 +52,354 @@ namespace gameCaro
 
         #region Method
         #region evalScore
-        //private void evalNodeLeaf(int value)
-        //{
-        //    eBoard.resetBoard();
-        //    int countCom, countPlayer;
-        //    // hàng ngang
-        //    for (int row = 0; row < Cons.CHESS_BOARD_WIDTH; row++) //hàng
-        //    {
-        //        for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT - 4; col++) //cột
-        //        {
-        //            countCom = countPlayer = 0; // biến đếm số lượng của máy và người
-        //            for (int i = 0; i < 5; i++)
-        //            {
-        //                // đếm số quân cờ của máy và người trong phạm vi 5 con
-        //                if (boardState.checkChess(new Point(row, col + i), 2))
-        //                    countCom++;
-        //                if (boardState.checkChess(new Point(row, col + i), 1))
-        //                    countPlayer++;
-        //            }
-        //            // trong vòng 5 ô k có quân địch
-        //            if (countCom * countPlayer == 0 && countCom != countPlayer)
-        //            {
-        //                for (int i = 0; i < 5; i++)
-        //                {
-        //                    if (boardState.checkChess(new Point(row, col + i), 0))  // ô chưa đánh trong 5 ô
-        //                    {
-        //                        if (countPlayer == 0)   // nếu trong 5 ô k có quân người
-        //                        {
-        //                            if (value == 1) // mà lượt đánh là của người
-        //                                eBoard.EBoard[row, col + i] += DScore[countCom];
-        //                            else  // lượt đánh của máy
-        //                                eBoard.EBoard[row, col + i] += AScore[countCom];
-        //                        }
-        //                        if (countCom == 0)  // nếu trong 5 ô k có quân máy
-        //                        {
-        //                            if (value == 2) // lượt đánh của máy
-        //                                eBoard.EBoard[row, col + i] += DScore[countPlayer];
-        //                            else  // lượt đánh của người
-        //                                eBoard.EBoard[row, col + i] += AScore[countPlayer];
-        //                        }
-        //                        if (countPlayer == 4 || countCom == 4) // nhân 2 điểm khi có 1 bên gần thắng
-        //                            eBoard.EBoard[row, col + i] *= 2;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    //dọc - tương tự ngang
-        //    for (int row = 0; row < Cons.CHESS_BOARD_WIDTH - 4; row++)  //hàng
-        //    {
-        //        for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT; col++) //cột
-        //        {
-        //            countCom = countPlayer = 0;
-        //            for (int i = 0; i < 5; i++)
-        //            {
-        //                if (boardState.checkChess(new Point(row + i, col), 2))
-        //                    countCom++;
-        //                if (boardState.checkChess(new Point(row + i, col), 1))
-        //                    countPlayer++;
-        //            }
-        //            if (countCom * countPlayer == 0 && countCom != countPlayer)
-        //            {
-        //                for (int i = 0; i < 5; i++)
-        //                {
-        //                    if (boardState.checkChess(new Point(row + i, col), 0))
-        //                    {
-        //                        if (countPlayer == 0)
-        //                        {
-        //                            if (value == 1)
-        //                                eBoard.EBoard[row + i, col] += DScore[countCom];
-        //                            else
-        //                                eBoard.EBoard[row + i, col] += AScore[countCom];
-        //                        }
-        //                        if (countCom == 0)
-        //                        {
-        //                            if (value == 2)
-        //                                eBoard.EBoard[row + i, col] += DScore[countPlayer];
-        //                            else
-        //                                eBoard.EBoard[row + i, col] += AScore[countPlayer];
-        //                        }
-        //                        if (countPlayer == 4 || countCom == 4)
-        //                            eBoard.EBoard[row + i, col] *= 2;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    //chéo chính - tương tự ngang
-        //    for (int row = 0; row < Cons.CHESS_BOARD_WIDTH - 4; row++)  //hàng
-        //    {
-        //        for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT - 4; col++) //cột
-        //        {
-        //            countCom = countPlayer = 0;
-        //            for (int i = 0; i < 5; i++)
-        //            {
-        //                if (boardState.checkChess(new Point(row + i, col + i), 2))
-        //                    countCom++;
-        //                if (boardState.checkChess(new Point(row + i, col + i), 1))
-        //                    countPlayer++;
-        //            }
-        //            if (countCom * countPlayer == 0 && countCom != countPlayer)
-        //            {
-        //                for (int i = 0; i < 5; i++)
-        //                {
-        //                    if (boardState.checkChess(new Point(row + i, col + i), 0))
-        //                    {
-        //                        if (countPlayer == 0)
-        //                        {
-        //                            if (value == 1)
-        //                                eBoard.EBoard[row + i, col + i] += DScore[countCom];
-        //                            else
-        //                                eBoard.EBoard[row + i, col + i] += AScore[countCom];
-        //                        }
-        //                        if (countCom == 0)
-        //                        {
-        //                            if (value == 2)
-        //                                eBoard.EBoard[row + i, col + i] += DScore[countPlayer];
-        //                            else
-        //                                eBoard.EBoard[row + i, col + i] += AScore[countPlayer];
-        //                        }
-        //                        if (countPlayer == 4 || countCom == 4)
-        //                            eBoard.EBoard[row + i, col + i] *= 2;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    //chéo phụ - tương tự ngang
-        //    for (int row = 4; row < Cons.CHESS_BOARD_WIDTH; row++)  //hàng
-        //    {
-        //        for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT - 4; col++) //cột
-        //        {
-        //            countCom = countPlayer = 0;
-        //            for (int i = 0; i < 5; i++)
-        //            {
-        //                if (boardState.checkChess(new Point(row - i, col + i), 2))
-        //                    countCom++;
-        //                if (boardState.checkChess(new Point(row - i, col + i), 1))
-        //                    countPlayer++;
-        //            }
-        //            if (countCom * countPlayer == 0 && countCom != countPlayer)
-        //            {
-        //                for (int i = 0; i < 5; i++)
-        //                {
-        //                    if (boardState.checkChess(new Point(row - i, col + i), 0))
-        //                    {
-        //                        if (countPlayer == 0)
-        //                        {
-        //                            if (value == 1)
-        //                                eBoard.EBoard[row - i, col + i] += DScore[countCom];
-        //                            else
-        //                                eBoard.EBoard[row - i, col + i] += AScore[countCom];
-        //                        }
-        //                        if (countCom == 0)
-        //                        {
-        //                            if (value == 2)
-        //                                eBoard.EBoard[row - i, col + i] += DScore[countPlayer];
-        //                            else
-        //                                eBoard.EBoard[row - i, col + i] += AScore[countPlayer];
-        //                        }
-        //                        if (countPlayer == 4 || countCom == 4)
-        //                            eBoard.EBoard[row - i, col + i] *= 2;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    //eBoard.MaxPos();
-        //    //return eBoard.evaluationBoard;
-        //}
+        private void evalNodeLeaf(int value)
+        {
+            eBoard.resetBoard();
+            int countCom, countPlayer;
+            //hàng ngang
+            for (int row = 0; row < Cons.CHESS_BOARD_WIDTH; row++) //hàng
+            {
+                for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT - 4; col++) //cột
+                {
+                    countCom = countPlayer = 0; // biến đếm số lượng của máy và người
+                    for (int i = 0; i < 5; i++)
+                    {
+                        //đếm số quân cờ của máy và người trong phạm vi 5 con
+                        if (boardState.checkChess(new Point(row, col + i), 2))
+                            countCom++;
+                        if (boardState.checkChess(new Point(row, col + i), 1))
+                            countPlayer++;
+                    }
+                    //trong vòng 5 ô k có quân địch
+                    if (countCom * countPlayer == 0 && countCom != countPlayer)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (boardState.checkChess(new Point(row, col + i), 0))  // ô chưa đánh trong 5 ô
+                            {
+                                if (countPlayer == 0)   // nếu trong 5 ô k có quân người
+                                {
+                                    if (value == 1) // mà lượt đánh là của người
+                                        eBoard.EBoard[row, col + i] += DScore[countCom];
+                                    else  // lượt đánh của máy
+                                        eBoard.EBoard[row, col + i] += AScore[countCom];
+                                }
+                                if (countCom == 0)  // nếu trong 5 ô k có quân máy
+                                {
+                                    if (value == 2) // lượt đánh của máy
+                                        eBoard.EBoard[row, col + i] += DScore[countPlayer];
+                                    else  // lượt đánh của người
+                                        eBoard.EBoard[row, col + i] += AScore[countPlayer];
+                                }
+                                if (countPlayer == 4 || countCom == 4) // nhân 2 điểm khi có 1 bên gần thắng
+                                    eBoard.EBoard[row, col + i] *= 2;
+                            }
+                        }
+                    }
+                }
+            }
+            //dọc - tương tự ngang
+            for (int row = 0; row < Cons.CHESS_BOARD_WIDTH - 4; row++)  //hàng
+            {
+                for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT; col++) //cột
+                {
+                    countCom = countPlayer = 0;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (boardState.checkChess(new Point(row + i, col), 2))
+                            countCom++;
+                        if (boardState.checkChess(new Point(row + i, col), 1))
+                            countPlayer++;
+                    }
+                    if (countCom * countPlayer == 0 && countCom != countPlayer)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (boardState.checkChess(new Point(row + i, col), 0))
+                            {
+                                if (countPlayer == 0)
+                                {
+                                    if (value == 1)
+                                        eBoard.EBoard[row + i, col] += DScore[countCom];
+                                    else
+                                        eBoard.EBoard[row + i, col] += AScore[countCom];
+                                }
+                                if (countCom == 0)
+                                {
+                                    if (value == 2)
+                                        eBoard.EBoard[row + i, col] += DScore[countPlayer];
+                                    else
+                                        eBoard.EBoard[row + i, col] += AScore[countPlayer];
+                                }
+                                if (countPlayer == 4 || countCom == 4)
+                                    eBoard.EBoard[row + i, col] *= 2;
+                            }
+                        }
+                    }
+                }
+            }
+            //chéo chính -tương tự ngang
+            for (int row = 0; row < Cons.CHESS_BOARD_WIDTH - 4; row++)  //hàng
+            {
+                for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT - 4; col++) //cột
+                {
+                    countCom = countPlayer = 0;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (boardState.checkChess(new Point(row + i, col + i), 2))
+                            countCom++;
+                        if (boardState.checkChess(new Point(row + i, col + i), 1))
+                            countPlayer++;
+                    }
+                    if (countCom * countPlayer == 0 && countCom != countPlayer)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (boardState.checkChess(new Point(row + i, col + i), 0))
+                            {
+                                if (countPlayer == 0)
+                                {
+                                    if (value == 1)
+                                        eBoard.EBoard[row + i, col + i] += DScore[countCom];
+                                    else
+                                        eBoard.EBoard[row + i, col + i] += AScore[countCom];
+                                }
+                                if (countCom == 0)
+                                {
+                                    if (value == 2)
+                                        eBoard.EBoard[row + i, col + i] += DScore[countPlayer];
+                                    else
+                                        eBoard.EBoard[row + i, col + i] += AScore[countPlayer];
+                                }
+                                if (countPlayer == 4 || countCom == 4)
+                                    eBoard.EBoard[row + i, col + i] *= 2;
+                            }
+                        }
+                    }
+                }
+            }
+            //chéo phụ -tương tự ngang
+            for (int row = 4; row < Cons.CHESS_BOARD_WIDTH; row++)  //hàng
+            {
+                for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT - 4; col++) //cột
+                {
+                    countCom = countPlayer = 0;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (boardState.checkChess(new Point(row - i, col + i), 2))
+                            countCom++;
+                        if (boardState.checkChess(new Point(row - i, col + i), 1))
+                            countPlayer++;
+                    }
+                    if (countCom * countPlayer == 0 && countCom != countPlayer)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (boardState.checkChess(new Point(row - i, col + i), 0))
+                            {
+                                if (countPlayer == 0)
+                                {
+                                    if (value == 1)
+                                        eBoard.EBoard[row - i, col + i] += DScore[countCom];
+                                    else
+                                        eBoard.EBoard[row - i, col + i] += AScore[countCom];
+                                }
+                                if (countCom == 0)
+                                {
+                                    if (value == 2)
+                                        eBoard.EBoard[row - i, col + i] += DScore[countPlayer];
+                                    else
+                                        eBoard.EBoard[row - i, col + i] += AScore[countPlayer];
+                                }
+                                if (countPlayer == 4 || countCom == 4)
+                                    eBoard.EBoard[row - i, col + i] *= 2;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-        //private void evalPosition()
-        //{
+        private void evalPosition(int value)
+        {
+            eBoard.resetBoard();
+            for (int row = 0; row < Cons.CHESS_BOARD_WIDTH; row++) //hàng
+            {
+                for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT; col++) //cột
+                {
+                    evalHorizontal(row, col, value);
+                    evalVertical(row, col, value);
+                    evalPrimary(row, col, value);
+                    evalSub(row, col, value);
+                }
+            }
+        }
 
-        //}
+        private void evalHorizontal(int row, int col, int value)
+        {
+            if (col >= Cons.CHESS_BOARD_HEIGHT - 4)
+                return;
+            int countCom = 0, countPlayer = 0; // biến đếm số lượng của máy và người
+            for (int i = 0; i < 5; i++)
+            {
+                //đếm số quân cờ của máy và người trong phạm vi 5 con
+                if (boardState.checkChess(new Point(row, col + i), 2))
+                    countCom++;
+                if (boardState.checkChess(new Point(row, col + i), 1))
+                    countPlayer++;
+            }
+            //            trong vòng 5 ô k có quân địch
+            if (countCom * countPlayer == 0 && countCom != countPlayer)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    if (boardState.checkChess(new Point(row, col + i), 0))  // ô chưa đánh trong 5 ô
+                    {
+                        if (countPlayer == 0)   // nếu trong 5 ô k có quân người
+                        {
+                            if (value == 1) // mà lượt đánh là của người
+                                eBoard.EBoard[row, col + i] += DScore[countCom];
+                            else  // lượt đánh của máy
+                                eBoard.EBoard[row, col + i] += AScore[countCom];
+                        }
+                        if (countCom == 0)  // nếu trong 5 ô k có quân máy
+                        {
+                            if (value == 2) // lượt đánh của máy
+                                eBoard.EBoard[row, col + i] += DScore[countPlayer];
+                            else  // lượt đánh của người
+                                eBoard.EBoard[row, col + i] += AScore[countPlayer];
+                        }
+                        if (countPlayer == 4 || countCom == 4) // nhân 2 điểm khi có 1 bên gần thắng
+                            eBoard.EBoard[row, col + i] *= 2;
+                    }
+                }
+            }
+        }
 
-        //private void evalHorizontal(int row, int col)
-        //{
-        //    for (int row = 0; row < Cons.CHESS_BOARD_WIDTH; row++) //hàng
-        //    {
-        //        for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT - 4; col++) //cột
-        //        {
-        //            countCom = countPlayer = 0; // biến đếm số lượng của máy và người
-        //            for (int i = 0; i < 5; i++)
-        //            {
-        //                đếm số quân cờ của máy và người trong phạm vi 5 con
-        //                if (boardState.checkChess(new Point(row, col + i), 2))
-        //                    countCom++;
-        //                if (boardState.checkChess(new Point(row, col + i), 1))
-        //                    countPlayer++;
-        //            }
-        //            trong vòng 5 ô k có quân địch
-        //            if (countCom * countPlayer == 0 && countCom != countPlayer)
-        //            {
-        //                for (int i = 0; i < 5; i++)
-        //                {
-        //                    if (boardState.checkChess(new Point(row, col + i), 0))  // ô chưa đánh trong 5 ô
-        //                    {
-        //                        if (countPlayer == 0)   // nếu trong 5 ô k có quân người
-        //                        {
-        //                            if (value == 1) // mà lượt đánh là của người
-        //                                eBoard.EBoard[row, col + i] += DScore[countCom];
-        //                            else  // lượt đánh của máy
-        //                                eBoard.EBoard[row, col + i] += AScore[countCom];
-        //                        }
-        //                        if (countCom == 0)  // nếu trong 5 ô k có quân máy
-        //                        {
-        //                            if (value == 2) // lượt đánh của máy
-        //                                eBoard.EBoard[row, col + i] += DScore[countPlayer];
-        //                            else  // lượt đánh của người
-        //                                eBoard.EBoard[row, col + i] += AScore[countPlayer];
-        //                        }
-        //                        if (countPlayer == 4 || countCom == 4) // nhân 2 điểm khi có 1 bên gần thắng
-        //                            eBoard.EBoard[row, col + i] *= 2;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+        private void evalVertical(int row, int col, int value)
+        {
+            if (row >= Cons.CHESS_BOARD_WIDTH - 4)
+                return;
+            int countCom = 0, countPlayer = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if (boardState.checkChess(new Point(row + i, col), 2))
+                    countCom++;
+                if (boardState.checkChess(new Point(row + i, col), 1))
+                    countPlayer++;
+            }
+            if (countCom * countPlayer == 0 && countCom != countPlayer)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    if (boardState.checkChess(new Point(row + i, col), 0))
+                    {
+                        if (countPlayer == 0)
+                        {
+                            if (value == 1)
+                                eBoard.EBoard[row + i, col] += DScore[countCom];
+                            else
+                                eBoard.EBoard[row + i, col] += AScore[countCom];
+                        }
+                        if (countCom == 0)
+                        {
+                            if (value == 2)
+                                eBoard.EBoard[row + i, col] += DScore[countPlayer];
+                            else
+                                eBoard.EBoard[row + i, col] += AScore[countPlayer];
+                        }
+                        if (countPlayer == 4 || countCom == 4)
+                            eBoard.EBoard[row + i, col] *= 2;
+                    }
+                }
+            }
+        }
 
-        //private void evalVertical(int row, int col)
-        //{
-        //    for (int row = 0; row < Cons.CHESS_BOARD_WIDTH - 4; row++)  //hàng
-        //    {
-        //        for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT; col++) //cột
-        //        {
-        //            countCom = countPlayer = 0;
-        //            for (int i = 0; i < 5; i++)
-        //            {
-        //                if (boardState.checkChess(new Point(row + i, col), 2))
-        //                    countCom++;
-        //                if (boardState.checkChess(new Point(row + i, col), 1))
-        //                    countPlayer++;
-        //            }
-        //            if (countCom * countPlayer == 0 && countCom != countPlayer)
-        //            {
-        //                for (int i = 0; i < 5; i++)
-        //                {
-        //                    if (boardState.checkChess(new Point(row + i, col), 0))
-        //                    {
-        //                        if (countPlayer == 0)
-        //                        {
-        //                            if (value == 1)
-        //                                eBoard.EBoard[row + i, col] += DScore[countCom];
-        //                            else
-        //                                eBoard.EBoard[row + i, col] += AScore[countCom];
-        //                        }
-        //                        if (countCom == 0)
-        //                        {
-        //                            if (value == 2)
-        //                                eBoard.EBoard[row + i, col] += DScore[countPlayer];
-        //                            else
-        //                                eBoard.EBoard[row + i, col] += AScore[countPlayer];
-        //                        }
-        //                        if (countPlayer == 4 || countCom == 4)
-        //                            eBoard.EBoard[row + i, col] *= 2;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+        private void evalPrimary(int row, int col, int value)
+        {
+            if (row >= Cons.CHESS_BOARD_WIDTH - 4)
+                return;
+            if (col >= Cons.CHESS_BOARD_HEIGHT - 4)
+                return;
+            int countCom = 0, countPlayer = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if (boardState.checkChess(new Point(row + i, col + i), 2))
+                    countCom++;
+                if (boardState.checkChess(new Point(row + i, col + i), 1))
+                    countPlayer++;
+            }
+            if (countCom * countPlayer == 0 && countCom != countPlayer)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    if (boardState.checkChess(new Point(row + i, col + i), 0))
+                    {
+                        if (countPlayer == 0)
+                        {
+                            if (value == 1)
+                                eBoard.EBoard[row + i, col + i] += DScore[countCom];
+                            else
+                                eBoard.EBoard[row + i, col + i] += AScore[countCom];
+                        }
+                        if (countCom == 0)
+                        {
+                            if (value == 2)
+                                eBoard.EBoard[row + i, col + i] += DScore[countPlayer];
+                            else
+                                eBoard.EBoard[row + i, col + i] += AScore[countPlayer];
+                        }
+                        if (countPlayer == 4 || countCom == 4)
+                            eBoard.EBoard[row + i, col + i] *= 2;
+                    }
+                }
+            }
+        }
 
-        //private void evalPrimary(int row, int col)
-        //{
-        //    for (int row = 0; row < Cons.CHESS_BOARD_WIDTH - 4; row++)  //hàng
-        //    {
-        //        for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT - 4; col++) //cột
-        //        {
-        //            countCom = countPlayer = 0;
-        //            for (int i = 0; i < 5; i++)
-        //            {
-        //                if (boardState.checkChess(new Point(row + i, col + i), 2))
-        //                    countCom++;
-        //                if (boardState.checkChess(new Point(row + i, col + i), 1))
-        //                    countPlayer++;
-        //            }
-        //            if (countCom * countPlayer == 0 && countCom != countPlayer)
-        //            {
-        //                for (int i = 0; i < 5; i++)
-        //                {
-        //                    if (boardState.checkChess(new Point(row + i, col + i), 0))
-        //                    {
-        //                        if (countPlayer == 0)
-        //                        {
-        //                            if (value == 1)
-        //                                eBoard.EBoard[row + i, col + i] += DScore[countCom];
-        //                            else
-        //                                eBoard.EBoard[row + i, col + i] += AScore[countCom];
-        //                        }
-        //                        if (countCom == 0)
-        //                        {
-        //                            if (value == 2)
-        //                                eBoard.EBoard[row + i, col + i] += DScore[countPlayer];
-        //                            else
-        //                                eBoard.EBoard[row + i, col + i] += AScore[countPlayer];
-        //                        }
-        //                        if (countPlayer == 4 || countCom == 4)
-        //                            eBoard.EBoard[row + i, col + i] *= 2;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private void evalSub(int row, int col)
-        //{
-        //    for (int row = 4; row < Cons.CHESS_BOARD_WIDTH; row++)  //hàng
-        //    {
-        //        for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT - 4; col++) //cột
-        //        {
-        //            countCom = countPlayer = 0;
-        //            for (int i = 0; i < 5; i++)
-        //            {
-        //                if (boardState.checkChess(new Point(row - i, col + i), 2))
-        //                    countCom++;
-        //                if (boardState.checkChess(new Point(row - i, col + i), 1))
-        //                    countPlayer++;
-        //            }
-        //            if (countCom * countPlayer == 0 && countCom != countPlayer)
-        //            {
-        //                for (int i = 0; i < 5; i++)
-        //                {
-        //                    if (boardState.checkChess(new Point(row - i, col + i), 0))
-        //                    {
-        //                        if (countPlayer == 0)
-        //                        {
-        //                            if (value == 1)
-        //                                eBoard.EBoard[row - i, col + i] += DScore[countCom];
-        //                            else
-        //                                eBoard.EBoard[row - i, col + i] += AScore[countCom];
-        //                        }
-        //                        if (countCom == 0)
-        //                        {
-        //                            if (value == 2)
-        //                                eBoard.EBoard[row - i, col + i] += DScore[countPlayer];
-        //                            else
-        //                                eBoard.EBoard[row - i, col + i] += AScore[countPlayer];
-        //                        }
-        //                        if (countPlayer == 4 || countCom == 4)
-        //                            eBoard.EBoard[row - i, col + i] *= 2;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+        private void evalSub(int row, int col, int value)
+        {
+            if (row < 4)
+                return;
+            if (col >= Cons.CHESS_BOARD_HEIGHT - 4)
+                return;
+            int countCom = 0, countPlayer = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if (boardState.checkChess(new Point(row - i, col + i), 2))
+                    countCom++;
+                if (boardState.checkChess(new Point(row - i, col + i), 1))
+                    countPlayer++;
+            }
+            if (countCom * countPlayer == 0 && countCom != countPlayer)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    if (boardState.checkChess(new Point(row - i, col + i), 0))
+                    {
+                        if (countPlayer == 0)
+                        {
+                            if (value == 1)
+                                eBoard.EBoard[row - i, col + i] += DScore[countCom];
+                            else
+                                eBoard.EBoard[row - i, col + i] += AScore[countCom];
+                        }
+                        if (countCom == 0)
+                        {
+                            if (value == 2)
+                                eBoard.EBoard[row - i, col + i] += DScore[countPlayer];
+                            else
+                                eBoard.EBoard[row - i, col + i] += AScore[countPlayer];
+                        }
+                        if (countPlayer == 4 || countCom == 4)
+                            eBoard.EBoard[row - i, col + i] *= 2;
+                    }
+                }
+            }
+        }
 
         private void evalChessBoard(bool isComputer)
         {
-            eBoard.resetBoard();
+            //eBoard.resetBoard();
             for (int row = 0; row < Cons.CHESS_BOARD_WIDTH; row++) //hàng
             {
                 for (int col = 0; col < Cons.CHESS_BOARD_HEIGHT; col++) //cột
@@ -414,7 +410,7 @@ namespace gameCaro
             }
         }
 
-        // đánh giá điểm cho vị trí đang xet
+        //// đánh giá điểm cho vị trí đang xet
 
         private void evalPosition(bool isComputer, Point point)
         {
@@ -425,8 +421,9 @@ namespace gameCaro
 
             int DefScore = evalHorizontalDefence(value, point) + evalVerticalDefence(value, point)
                                             + evalPrimaryDefence(value, point) + evalSubDefence(value, point);
-            eBoard.EBoard[point.X, point.Y] = Math.Max(AttScore, DefScore);
-            //eBoard.EBoard[point.X, point.Y] = AttScore + DefScore;
+            //eBoard.EBoard[point.X, point.Y] += Math.Max(AttScore, DefScore);
+            eBoard.EBoard[point.X, point.Y] += AttScore + DefScore;
+
         }
 
         // Tính điểm hàng ngang
@@ -514,6 +511,7 @@ namespace gameCaro
             if (countOur == 2)
                 return 0;
             score += DScore[countEnemy];
+            score -= AScore[countOur];
             return score;
         }
         // Tính điểm hàng dọc
@@ -601,6 +599,7 @@ namespace gameCaro
             if (countOur == 2)
                 return 0;
             score += DScore[countEnemy];
+            score -= AScore[countOur];
             return score;
         }
         // Tính điểm chéo chính
@@ -688,6 +687,7 @@ namespace gameCaro
             if (countOur == 2)
                 return 0;
             score += DScore[countEnemy];
+            score -= AScore[countOur];
             return score;
         }
         // Tính điểm chéo phụ
@@ -775,20 +775,25 @@ namespace gameCaro
             if (countOur == 2)
                 return 0;
             score += DScore[countEnemy];
+            score -= AScore[countOur];
             return score;
         }
         #endregion
 
         #region Alphabeta pruning
+
         //thuật toán alpha-beta
         //private int alphaBetaPruning(int alpha, int beta, int depth, bool isComputer)
         //{
         //    if (depth >= MAXDEPTH)      // kiểm tra là node lá
-        //        return evalNodeLeaf(isComputer ? 2 : 1);  // return điểm node lá, hàm evalChessBoard là hàm tính điểm, node lá nên là máy
+        //    {
+        //        eBoard.MaxPos();
+        //        return eBoard.evaluationBoard;  // return điểm node lá, hàm evalChessBoard là hàm tính điểm, node lá nên là máy
+        //    }
         //    int bestVal;    // value tạm thời của node
-        //    evalChessBoard(isComputer);     // tính điểm tạm thời
+        //    evalNodeLeaf(isComputer ? 2 : 1);      // tính điểm tạm thời
         //    List<Point> list = ListPosition();  // lấy ra danh sách các point có thể xét đến để đánh thử
-        //    // Trường hợp MAX
+        //                                        // Trường hợp MAX
         //    if (isComputer)
         //    {
         //        Console.WriteLine(depth);
@@ -796,12 +801,12 @@ namespace gameCaro
         //        foreach (Point point in list)   // xét danh sách các nút đánh thử - đây sẽ là các node con
         //        {
         //            boardState.DrawChess(point, 2);     // đánh thử
-        //            // nếu như nước đánh này máy thắng
+        //                                                // nếu như nước đánh này máy thắng
         //            if (boardState.isEndGame(boardState.Matrix[point.Y][point.X]))
         //            {
         //                boardState.DrawChess(point, 0);     // xóa trạng thái đánh thử
         //                bestVal = int.MaxValue;     // khi đó node này sẽ mang giá trị MaxValue và return giá trị này
-        //                // gán điểm cho trường hợp để lấy nước đi
+        //                                            // gán điểm cho trường hợp để lấy nước đi
         //                if (depth == 0)
         //                    Move.setPosition(point.X, point.Y, bestVal);
         //                return bestVal;
@@ -847,21 +852,30 @@ namespace gameCaro
         //        return bestVal;
         //    }
         //}
-
-        private int alphaBetaPruning(int alpha, int beta, int depth, bool isComputer)
+        
+        private int alphaBetaPruning(int alpha, int beta, int depth, bool isComputer, int maxNode)
         {
-            if (depth >= MAXDEPTH)      // kiểm tra là node lá
-            {
-                eBoard.MaxPos();
-                return eBoard.evaluationBoard;  // return điểm node lá, hàm evalChessBoard là hàm tính điểm, node lá nên là máy
-            }
+            //if (depth >= MAXDEPTH)      // kiểm tra là node lá
+            //{
+            //    eBoard.MaxPos();
+            //    return eBoard.evaluationBoard;  // return điểm node lá, hàm evalChessBoard là hàm tính điểm, node lá nên là máy
+            //}
             int bestVal;    // value tạm thời của node
+                            //if(depth == 0)
+                            //    evalChessBoard(isComputer);
+                            //else
+            evalPosition(isComputer ? 2 : 1);
             //evalNodeLeaf(isComputer ? 2 : 1);    // version 1
             evalChessBoard(isComputer);     // tính điểm tạm thời, version 2
-            List<Point> list = ListPosition();  // lấy ra danh sách các point có thể xét đến để đánh thử
+            List<Point> list = ListPosition(maxNode);  // lấy ra danh sách các point có thể xét đến để đánh thử
             // Trường hợp MAX
             if (!isComputer)
             {
+                if (depth >= MAXDEPTH - 1)
+                {
+                    eBoard.MaxPos();
+                    return eBoard.evaluationBoard;
+                }
                 bestVal = int.MinValue;     // gán tạm thời value của node là MinValue
                 foreach (Point point in list)   // xét danh sách các nút đánh thử - đây sẽ là các node con
                 {
@@ -874,7 +888,7 @@ namespace gameCaro
                         return bestVal;
                     }
                     // lấy giá trị max của các node con
-                    bestVal = Math.Max(bestVal, alphaBetaPruning(alpha, beta, depth + 1, !isComputer));
+                    bestVal = Math.Max(bestVal, alphaBetaPruning(alpha, beta, depth + 1, !isComputer, 4));
                     boardState.DrawChess(point, 0); // xóa trạng thái đánh thử
                     alpha = Math.Max(alpha, bestVal);
                     if (alpha >= beta)    // pruning (cắt trường hợp, nếu node này mang giá trị cao hơn beta thì cắt)
@@ -902,7 +916,15 @@ namespace gameCaro
                             Move.setPosition(point.X, point.Y, bestVal);
                         return bestVal;
                     }
-                    bestVal = Math.Min(bestVal, alphaBetaPruning(alpha, beta, depth + 1, !isComputer));
+                    if (depth >= MAXDEPTH - 1)
+                    {
+                        eBoard.MaxPos();
+                        bestVal = Math.Min(bestVal, eBoard.evaluationBoard);
+                    }
+                    else
+                    {
+                        bestVal = Math.Min(bestVal, alphaBetaPruning(alpha, beta, depth + 1, !isComputer, 4));
+                    }
                     boardState.DrawChess(point, 0);
                     beta = Math.Min(beta, bestVal);
                     if (beta <= alpha)
@@ -912,7 +934,7 @@ namespace gameCaro
                     // gán điểm cho trường hợp để lấy nước đi
                     if (depth == 0)
                     {
-                        Console.WriteLine(point + " " + beta);
+                        Console.WriteLine(point + " : " + bestVal);
                         Move.setPosition(point.X, point.Y, beta);
                     }
                 }
@@ -920,10 +942,84 @@ namespace gameCaro
             }
         }
 
-        private List<Point> ListPosition()
+        //private int alphaBetaPruning(int alpha, int beta, int depth, bool isComputer)
+        //{
+        //    if (depth >= MAXDEPTH)      // kiểm tra là node lá
+        //    {
+        //        eBoard.MaxPos();
+        //        return eBoard.evaluationBoard;  // return điểm node lá, hàm evalChessBoard là hàm tính điểm, node lá nên là máy
+        //    }
+        //    int bestVal;    // value tạm thời của node
+        //    evalNodeLeaf(isComputer ? 2 : 1);    // version 1
+        //    //evalChessBoard(isComputer);     // tính điểm tạm thời, version 2
+        //    List<Point> list = ListPosition();  // lấy ra danh sách các point có thể xét đến để đánh thử
+        //    // Trường hợp MAX
+        //    if (!isComputer)
+        //    {
+        //        bestVal = int.MinValue;     // gán tạm thời value của node là MinValue
+        //        foreach (Point point in list)   // xét danh sách các nút đánh thử - đây sẽ là các node con
+        //        {
+        //            boardState.DrawChess(point, 1);     // đánh thử
+        //            // nếu như nước đánh này máy thắng
+        //            if (boardState.isEndGame(boardState.Matrix[point.Y][point.X]))
+        //            {
+        //                boardState.DrawChess(point, 0);     // xóa trạng thái đánh thử
+        //                bestVal = 1;     // khi đó node này sẽ mang giá trị MaxValue và return giá trị này
+        //                return bestVal;
+        //            }
+        //            // lấy giá trị max của các node con
+        //            bestVal = Math.Max(bestVal, alphaBetaPruning(alpha, beta, depth + 1, !isComputer));
+        //            boardState.DrawChess(point, 0); // xóa trạng thái đánh thử
+        //            alpha = Math.Max(alpha, bestVal);
+        //            if (alpha >= beta)    // pruning (cắt trường hợp, nếu node này mang giá trị cao hơn beta thì cắt)
+        //            {
+        //                // ở đây có thể hiểu là beta là giá trị node cha - MIN                    
+        //                return bestVal;
+        //            }
+
+        //        }
+        //        return bestVal;
+        //    }
+        //    // Trường hợp MIN - ngược lại với MAX
+        //    else
+        //    {
+        //        bestVal = int.MaxValue;
+        //        foreach (Point point in list)
+        //        {
+        //            boardState.DrawChess(point, 2);
+        //            if (boardState.isEndGame(boardState.Matrix[point.Y][point.X]))
+        //            {
+        //                boardState.DrawChess(point, 0);     // xóa trạng thái đánh thử
+        //                bestVal = int.MaxValue;     // khi đó node này sẽ mang giá trị MaxValue và return giá trị này
+        //                // gán điểm cho trường hợp để lấy nước đi
+        //                if (depth == 0)
+        //                    Move.setPosition(point.X, point.Y, bestVal);
+        //                return bestVal;
+        //            }
+        //            bestVal = Math.Min(bestVal, alphaBetaPruning(alpha, beta, depth + 1, !isComputer));
+        //            boardState.DrawChess(point, 0);
+        //            beta = Math.Min(beta, bestVal);
+        //            if (beta <= alpha)
+        //            {
+        //                return bestVal;
+        //            }
+        //            // gán điểm cho trường hợp để lấy nước đi
+        //            if (depth == 0)
+        //            {
+        //                Console.WriteLine(point + " " + beta);
+        //                Move.setPosition(point.X, point.Y, beta);
+        //            }
+        //        }
+        //        return bestVal;
+        //    }
+        //}
+
+        
+
+        private List<Point> ListPosition(int maxNode)
         {
             List<Point> list = new List<Point>();
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < maxNode; i++)
             {
                 Point p = eBoard.MaxPos();
                 if (p.X == -1 && p.Y == -1)
@@ -939,22 +1035,46 @@ namespace gameCaro
         #region Move
         private Point randomBestPositions()
         {
+            List<Point> list = new List<Point>();
             Point point = Move.MaxPos();
             int max = Move.evaluationBoard; // lấy max điểm của trạng thái
             if (max == 0)
                 return new Point(0, 0);
-            // lấy list Point có điểm
-            List<Point> list = new List<Point>();
-            list.Add(point);
-            Move.setPosition(point.X, point.Y, 0);
-            for (int i = 0; i < Cons.CHESS_BOARD_WIDTH * Cons.CHESS_BOARD_HEIGHT; i++)
+            if (max == 1)
             {
-                Point p = Move.MaxPos();
-                // nếu hết các trường hợp hoặc khác max thì break
-                if (p.X == -1 || (Move.evaluationBoard != max))
-                    break;
-                list.Add(p);
-                Move.setPosition(p.X, p.Y, 0);    // set cho điểm ô đã lấy = 0
+                evalPosition(2);
+                point = eBoard.MaxPos();
+                max = eBoard.evaluationBoard;
+                list.Add(point);
+                eBoard.setPosition(point.X, point.Y, 0);
+                Console.WriteLine(point + " : " + max);
+                for (int i = 0; i < 4; i++)
+                {
+                    Point p = eBoard.MaxPos();
+                    Console.WriteLine(p + " : " + eBoard.evaluationBoard);
+                    // nếu hết các trường hợp hoặc khác max thì break
+                    if (p.X == -1 || (eBoard.evaluationBoard != max))
+                        break;
+                    //if (p.X == -1)
+                    //    break;
+                    list.Add(p);
+                    eBoard.setPosition(p.X, p.Y, 0);    // set cho điểm ô đã lấy = 0
+                }
+            }
+            else
+            {
+                // lấy list Point có điểm
+                list.Add(point);
+                Move.setPosition(point.X, point.Y, 0);
+                for (int i = 0; i < Cons.CHESS_BOARD_WIDTH * Cons.CHESS_BOARD_HEIGHT; i++)
+                {
+                    Point p = Move.MaxPos();
+                    // nếu hết các trường hợp hoặc khác max thì break
+                    if (p.X == -1 || (Move.evaluationBoard != max))
+                        break;
+                    list.Add(p);
+                    Move.setPosition(p.X, p.Y, 0);    // set cho điểm ô đã lấy = 0
+                }
             }
             Random r = new Random();
             // random 0-list.count để lấy point
@@ -964,7 +1084,7 @@ namespace gameCaro
 
         public Point SearchPosition()
         {
-            alphaBetaPruning(int.MinValue, int.MaxValue, 0, true);
+            alphaBetaPruning(int.MinValue, int.MaxValue, 0, true, 6);
             Point p = new Point();
             p = randomBestPositions();
             eBoard.resetBoard();

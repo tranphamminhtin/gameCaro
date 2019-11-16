@@ -81,12 +81,12 @@ namespace gameCaro
                 ChessBoard.Ready = true;
             } 
             else
-            {
-                do
-                {
-                    ChessBoard.Undo();
-                    ChessBoard.Ready = true;
-                } while (ChessBoard.CurrentPlayer != 1);
+            {   if (!ChessBoard.isSearching)
+                    do
+                    {
+                        ChessBoard.Undo();
+                        ChessBoard.Ready = true;
+                    } while (ChessBoard.CurrentPlayer != 1);
             }      
         }
 
@@ -96,10 +96,11 @@ namespace gameCaro
                 ChessBoard.Redo();
             else
             {
-                do
-                {
-                    ChessBoard.Redo();
-                } while (ChessBoard.CurrentPlayer != 1);
+                if (!ChessBoard.isSearching)
+                    do
+                    {
+                        ChessBoard.Redo();
+                    } while (ChessBoard.CurrentPlayer != 1);
             }
         }
 
