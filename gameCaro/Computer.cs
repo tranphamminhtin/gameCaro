@@ -866,7 +866,7 @@ namespace gameCaro
                             //else
             evalPosition(isComputer ? 2 : 1);
             //evalNodeLeaf(isComputer ? 2 : 1);    // version 1
-            evalChessBoard(isComputer);     // tính điểm tạm thời, version 2
+            //evalChessBoard(isComputer);     // tính điểm tạm thời, version 2
             List<Point> list = ListPosition(maxNode);  // lấy ra danh sách các point có thể xét đến để đánh thử
             // Trường hợp MAX
             if (!isComputer)
@@ -884,7 +884,7 @@ namespace gameCaro
                     if (boardState.isEndGame(boardState.Matrix[point.Y][point.X]))
                     {
                         boardState.DrawChess(point, 0);     // xóa trạng thái đánh thử
-                        bestVal = 1;     // khi đó node này sẽ mang giá trị MaxValue và return giá trị này
+                        bestVal = depth;     // khi đó node này sẽ mang giá trị MaxValue và return giá trị này
                         return bestVal;
                     }
                     // lấy giá trị max của các node con
@@ -1040,45 +1040,20 @@ namespace gameCaro
             int max = Move.evaluationBoard; // lấy max điểm của trạng thái
             if (max == 0)
                 return new Point(0, 0);
-            if (max == 1)
+            list.Add(point);
+            Move.setPosition(point.X, point.Y, 0);
+            for (int i = 0; i < Cons.CHESS_BOARD_WIDTH * Cons.CHESS_BOARD_HEIGHT; i++)
             {
-                evalPosition(2);
-                point = eBoard.MaxPos();
-                max = eBoard.evaluationBoard;
-                list.Add(point);
-                eBoard.setPosition(point.X, point.Y, 0);
-                Console.WriteLine(point + " : " + max);
-                for (int i = 0; i < 4; i++)
-                {
-                    Point p = eBoard.MaxPos();
-                    Console.WriteLine(p + " : " + eBoard.evaluationBoard);
-                    // nếu hết các trường hợp hoặc khác max thì break
-                    if (p.X == -1 || (eBoard.evaluationBoard != max))
-                        break;
-                    //if (p.X == -1)
-                    //    break;
-                    list.Add(p);
-                    eBoard.setPosition(p.X, p.Y, 0);    // set cho điểm ô đã lấy = 0
-                }
+                Point p = Move.MaxPos();
+                // nếu hết các trường hợp hoặc khác max thì break
+                if (p.X == -1 || (Move.evaluationBoard != max))
+                    break;
+                list.Add(p);
+                Move.setPosition(p.X, p.Y, 0);    // set cho điểm ô đã lấy = 0
             }
-            else
-            {
-                // lấy list Point có điểm
-                list.Add(point);
-                Move.setPosition(point.X, point.Y, 0);
-                for (int i = 0; i < Cons.CHESS_BOARD_WIDTH * Cons.CHESS_BOARD_HEIGHT; i++)
-                {
-                    Point p = Move.MaxPos();
-                    // nếu hết các trường hợp hoặc khác max thì break
-                    if (p.X == -1 || (Move.evaluationBoard != max))
-                        break;
-                    list.Add(p);
-                    Move.setPosition(p.X, p.Y, 0);    // set cho điểm ô đã lấy = 0
-                }
-            }
+            //}
             Random r = new Random();
             // random 0-list.count để lấy point
-            //Console.WriteLine(list.Count);
             return list[r.Next(0, list.Count)];
         }
 
