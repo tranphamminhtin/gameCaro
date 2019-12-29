@@ -29,6 +29,7 @@ namespace gameCaro
             pgbO.Maximum = pgbX.Maximum = Cons.TM_MAX;
             pgbO.Value = pgbX.Value = 0;
             tmO.Interval = tmX.Interval = Cons.TM_INTERVAL;
+            level1ToolStripMenuItem.Checked = true;
         }
 
         public void resetTime(int currentPlayer)
@@ -158,18 +159,27 @@ namespace gameCaro
         private void level1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Computer.MAXDEPTH = 5;
+            level1ToolStripMenuItem.Checked = true;
+            level2ToolStripMenuItem.Checked = false;
+            level3ToolStripMenuItem.Checked = false;
             setComputer();
         }
 
         private void level2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Computer.MAXDEPTH = 6;
+            level1ToolStripMenuItem.Checked = false;
+            level2ToolStripMenuItem.Checked = true;
+            level3ToolStripMenuItem.Checked = false;
             setComputer();
         }
 
         private void level3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Computer.MAXDEPTH = 7;
+            level1ToolStripMenuItem.Checked = false;
+            level2ToolStripMenuItem.Checked = false;
+            level3ToolStripMenuItem.Checked = true;
             setComputer();
         }
 
